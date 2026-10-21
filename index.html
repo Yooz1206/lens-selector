@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>镜头选型四要素 · 在线计算器</title>
+<style>
+:root{--ink:#15181d;--muted:#6b7280;--line:#e5e7eb;--bg:#f4f5f7;--card:#fff;--accent:#b45309;--ok:#0f7b3f;--bad:#b42318;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14.5px/1.55 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;}
+header{background:#111317;color:#fff;padding:18px 24px;}
+header .wrap{max-width:1180px;margin:0 auto;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+header h1{margin:0;font-size:18px;letter-spacing:.4px;font-weight:650;}
+header p{margin:0;color:#9aa1ad;font-size:12.5px;}
+main{max-width:1180px;margin:0 auto;padding:22px 24px 64px;display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start;}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;}
+.panel h2{font-size:14px;margin:0 0 14px;color:#374151;letter-spacing:.3px;}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;}
+input[type=number]{width:100%;padding:9px 10px;border:1px solid #d7dae0;border-radius:8px;font-size:14px;font-variant-numeric:tabular-nums;background:#fff;color:var(--ink);}
+input[type=number]:focus{outline:2px solid #f0c48a;border-color:var(--accent);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+button{border:1px solid #d7dae0;background:#fff;color:var(--ink);border-radius:8px;padding:9px 12px;font-size:13px;cursor:pointer;}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;width:100%;margin-top:16px;font-weight:600;font-size:14px;padding:11px;}
+button:hover{filter:brightness(.97)}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+.presets button{font-size:12px;padding:6px 9px;color:#4b5563;}
+.hint{font-size:11.5px;color:#9aa1ad;margin-top:10px;line-height:1.5;}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+.card .k{font-size:11px;color:var(--muted);letter-spacing:.3px;}
+.card .v{font-size:20px;font-weight:650;margin-top:2px;font-variant-numeric:tabular-nums;}
+.card .u{font-size:11px;color:var(--muted);font-weight:400;}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:16px;}
+.sec h3{font-size:14px;margin:0 0 10px;padding-left:9px;border-left:3px solid var(--accent);}
+table{width:100%;border-collapse:collapse;font-size:12.8px;}
+th{text-align:left;padding:7px 8px;background:#f3f4f7;color:#4b5563;font-weight:600;font-size:11.5px;white-space:nowrap;border-bottom:1px solid var(--line);}
+td{padding:7px 8px;border-bottom:1px solid #f0f1f4;vertical-align:middle;font-variant-numeric:tabular-nums;}
+tr:last-child td{border-bottom:none;}
+.ok{color:var(--ok);font-weight:600}
+.bad{color:var(--bad);font-weight:600}
+.bar{position:relative;height:7px;background:#eef0f4;border-radius:4px;min-width:80px;margin-top:3px;}
+.bar i{position:absolute;inset:0 auto 0 0;border-radius:4px;background:linear-gradient(90deg,#f59e0b,#b45309);}
+.bar b{position:absolute;top:-3px;bottom:-3px;width:2px;background:#111;opacity:.55;}
+.rec{border:1px solid #f0dcbd;background:#fdf8ef;border-radius:10px;padding:14px 16px;margin-top:10px;}
+.rec .t{font-weight:650;font-size:14.5px;margin-bottom:2px;}
+.rec .t span{font-size:10.5px;background:var(--accent);color:#fff;border-radius:20px;padding:2px 7px;margin-right:8px;vertical-align:2px;}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 14px;margin-top:10px;}
+.grid div{font-size:11.5px;color:var(--muted);}
+.grid b{display:block;color:var(--ink);font-size:13.5px;font-weight:600;}
+ul.notes{margin:8px 0 0 16px;padding:0;font-size:12px;color:#4b5563;}
+ul.notes li{margin:2px 0;}
+.empty{color:var(--muted);font-size:13px;}
+.miss{margin-top:12px;background:#fafbfc;border:1px dashed #dfe2e8;border-radius:8px;padding:10px 12px;font-size:12px;color:#4b5563;}
+.miss ul{margin:6px 0 0 16px;padding:0;}
+.miss li{margin:3px 0;line-height:1.55;}
+details{margin-top:6px;font-size:12.5px;color:#4b5563;}
+summary{cursor:pointer;color:var(--accent);}
+code{background:#f3f4f6;padding:1px 5px;border-radius:4px;font-size:12px;}
+@media(max-width:900px){main{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>镜头选型四要素 · 在线计算器</h1>
+  <p>视野 FOV · 工作距离 WD · 景深 DOF · 分辨率 —— 0.1 mm 划痕检测</p>
+</div></header>
+
+<main>
+  <section class="panel">
+    <h2>输入（四要素）</h2>
+    <div class="row2">
+      <div><label>① 视野宽 FOV-W (mm)</label><input id="fovW" type="number" value="100" min="1" step="1"></div>
+      <div><label>① 视野高 FOV-H (mm)</label><input id="fovH" type="number" value="80" min="1" step="1"></div>
+    </div>
+    <label>② 工作距离 WD (mm)</label><input id="wd" type="number" value="400" min="20" step="10">
+    <label>③ 景深要求 DOF (mm)</label><input id="depth" type="number" value="5" min="0.1" step="0.5">
+    <div class="row2">
+      <div><label>④ 最小缺陷 (mm)</label><input id="defect" type="number" value="0.1" min="0.01" step="0.01"></div>
+      <div><label>④ 每缺陷像素数</label><input id="pxd" type="number" value="3" min="1" max="8" step="0.5"></div>
+    </div>
+    <label>视野余量 (%)</label><input id="margin" type="number" value="0" min="0" max="50" step="5">
+    <button class="primary" id="go">计算选型</button>
+    <div class="presets">
+      <button data-p="50,40,250,3">小件 50×40</button>
+      <button data-p="100,80,400,5">中件 100×80</button>
+      <button data-p="200,160,600,10">大件 200×160</button>
+    </div>
+    <p class="hint">2–3 px 用于检出，3–5 px 用于测量宽度。若 0.1 mm 是公差，建议取 4–5 px。</p>
+  </section>
+
+  <div id="out"></div>
+</main>
+
+<script>
+"use strict";
+const CAMERAS = [
+  {id:"CAM-1.3MP", w:1280, h:1024, p:4.80, shutter:"全局", iface:"GigE", tier:1, note:'1/2" 入门'},
+  {id:"CAM-2MP",   w:1920, h:1080, p:2.90, shutter:"卷帘", iface:"USB3", tier:1, note:'1/2.8" 小像元'},
+  {id:"CAM-3MP",   w:2048, h:1536, p:3.45, shutter:"全局", iface:"GigE", tier:2, note:'1/1.8"'},
+  {id:"CAM-5MP-A", w:2448, h:2048, p:3.45, shutter:"全局", iface:"GigE", tier:2, note:'2/3"'},
+  {id:"CAM-5MP-B", w:2592, h:1944, p:2.40, shutter:"卷帘", iface:"USB3", tier:2, note:'1/1.8" 小像元'},
+  {id:"CAM-12MP",  w:4024, h:3036, p:1.85, shutter:"卷帘", iface:"USB3", tier:3, note:'1/1.7" 高分辨率'},
+  {id:"CAM-20MP",  w:5472, h:3648, p:2.40, shutter:"卷帘", iface:"USB3", tier:4, note:'1" 大靶面'}
+];
+const LENSES = [
+  {id:"8mm f/1.8", f:8, circle:11, mod:100, fmax:1.8, mtf:100, tier:1},
+  {id:"12mm f/1.8", f:12, circle:11, mod:100, fmax:1.8, mtf:120, tier:1},
+  {id:"16mm f/1.8", f:16, circle:11, mod:100, fmax:1.8, mtf:120, tier:2},
+  {id:"20mm f/1.8", f:20, circle:11, mod:150, fmax:1.8, mtf:120, tier:2},
+  {id:"25mm f/1.8", f:25, circle:11, mod:150, fmax:1.8, mtf:120, tier:2},
+  {id:"35mm f/1.8", f:35, circle:11, mod:200, fmax:1.8, mtf:110, tier:2},
+  {id:"50mm f/2.0", f:50, circle:11, mod:250, fmax:2.0, mtf:100, tier:3},
+  {id:'8mm f/2.8 (1")', f:8, circle:16, mod:150, fmax:2.8, mtf:90, tier:3},
+  {id:'12mm f/2.8 (1")', f:12, circle:16, mod:150, fmax:2.8, mtf:100, tier:3},
+  {id:'16mm f/2.8 (1")', f:16, circle:16, mod:200, fmax:2.8, mtf:110, tier:3},
+  {id:'25mm f/2.8 (1")', f:25, circle:16, mod:200, fmax:2.8, mtf:120, tier:3},
+  {id:'35mm f/2.8 (1")', f:35, circle:16, mod:250, fmax:2.8, mtf:120, tier:4},
+  {id:'50mm f/2.8 (1")', f:50, circle:16, mod:300, fmax:2.8, mtf:110, tier:4},
+  {id:"16mm f/2.0 HR", f:16, circle:11, mod:150, fmax:2.0, mtf:200, tier:4},
+  {id:"20mm f/2.0 HR", f:20, circle:11, mod:150, fmax:2.0, mtf:200, tier:4},
+  {id:"25mm f/2.0 HR", f:25, circle:11, mod:200, fmax:2.0, mtf:200, tier:4},
+  {id:"35mm f/2.0 HR", f:35, circle:11, mod:250, fmax:2.0, mtf:200, tier:4}
+];
+const TELE = [
+  {id:"TC-0.05x", mag:0.05, circle:16, wd:400, dof:12.0},
+  {id:"TC-0.075x", mag:0.075, circle:16, wd:350, dof:8.0},
+  {id:"TC-0.10x", mag:0.10, circle:11, wd:300, dof:5.0},
+  {id:"TC-0.15x", mag:0.15, circle:11, wd:250, dof:3.5},
+  {id:"TC-0.20x", mag:0.20, circle:11, wd:200, dof:2.5},
+  {id:"TC-0.30x", mag:0.30, circle:11, wd:150, dof:1.6},
+  {id:"TC-0.50x", mag:0.50, circle:11, wd:120, dof:0.8},
+  {id:"TC-1.00x", mag:1.00, circle:11, wd:100, dof:0.4}
+];
+const STOPS = [1.4,1.8,2.0,2.8,4.0,5.6,8.0,11.0,16.0];
+const LAMBDA = 0.55;
+
+const sensorW = c => c.w * c.p / 1000;
+const sensorH = c => c.h * c.p / 1000;
+const diag = c => Math.hypot(sensorW(c), sensorH(c));
+const clamp = (x,a,b) => Math.max(a, Math.min(b, x));
+const dofMM = (n,m,cocPx,pixUm) => { const c = cocPx*pixUm/1000; return 2*n*c*(1+m)/(m*m); };
+const airyUm = (n,m) => 2.44*LAMBDA*n*(1+m);
+const cutoffLpmm = (n,m) => 1/(LAMBDA*1e-3*n*(1+m));
+const featLpmm = (d,m) => 1/(2*d*m);
+
+function readReq(){
+  const g = id => parseFloat(document.getElementById(id).value);
+  const fovW = Math.max(0.1, g("fovW")), fovH = Math.max(0.1, g("fovH"));
+  const margin = clamp(g("margin")||0, 0, 50)/100;
+  const r = {
+    fovW, fovH,
+    wd: Math.max(5, g("wd")),
+    depth: Math.max(0.01, g("depth")),
+    defect: Math.max(0.001, g("defect")),
+    pxd: clamp(g("pxd"), 1, 8),
+    margin,
+    cocPx: 2
+  };
+  r.fovRW = fovW*(1+margin);
+  r.fovRH = fovH*(1+margin);
+  return r;
+}
+
+function reqDerived(r){
+  const paMax = r.defect / r.pxd;
+  const nw = Math.ceil(r.fovRW/paMax), nh = Math.ceil(r.fovRH/paMax);
+  return {paMax, fovRW: r.fovRW, fovRH: r.fovRH, nw, nh, mp: nw*nh/1e6};
+}
+
+function tryCombo(cam, lens, r){
+  if (lens.circle + 1e-9 < diag(cam)) return {fail:"像圈不足"};
+  if (r.wd <= lens.f*1.02) return {fail:"WD 过近"};
+  if (r.wd < lens.mod) return {fail:"低于 MOD"};
+  const m = lens.f/(r.wd - lens.f);
+  const fw = sensorW(cam)/m, fh = sensorH(cam)/m;
+  if (fw < r.fovRW || fh < r.fovRH) return {fail:"视野不足", fw, fh};
+  const pa = cam.p/1000/m;
+  const ppd = r.defect/pa;
+  let N = null;
+  for (const n of STOPS){
+    if (n < lens.fmax - 1e-9) continue;
+    if (dofMM(n,m,r.cocPx,cam.p) >= r.depth){ N = n; break; }
+  }
+  if (N === null) return {fail:"景深不足", fw, fh, pa, ppd};
+  const dof = dofMM(N,m,r.cocPx,cam.p);
+  const feat = featLpmm(r.defect,m), cut = cutoffLpmm(N,m);
+  const lensNeed = 2*feat, mtfRatio = lens.mtf/lensNeed;
+  const c = {ok:true, cam, lens, N, m, fw, fh, pa, ppd, dof, airy:airyUm(N,m),
+             feat, cut, diff:feat/cut, lensNeed, mtfRatio, warnings:[]};
+  if (ppd < r.pxd*1.15) c.warnings.push("像素余量 <15%");
+  if (c.diff > 0.45) c.warnings.push(`衍射受限（缺陷频率达截止频率的 ${Math.round(c.diff*100)}%）`);
+  if (mtfRatio < 1) c.warnings.push(`镜头解析力偏低（${lens.mtf} < 建议 ${Math.round(lensNeed)} lp/mm）`);
+  if (fw > r.fovRW*1.35) c.warnings.push(`视野偏大（${Math.round((fw/r.fovRW-1)*100)}% 余量）`);
+  if (dof < r.depth*1.15) c.warnings.push("景深余量 <15%");
+  if (cam.shutter === "卷帘") c.warnings.push("卷帘快门，动态拍摄需注意");
+  return c;
+}
+
+function evaluate(cam, lens, r){
+  const c = tryCombo(cam, lens, r);
+  return (c.ok && c.ppd >= r.pxd) ? c : null;
+}
+
+function score(c, r){
+  const resM = clamp((c.ppd/r.pxd - 1)/0.6, 0, 1);
+  const dofM = clamp((c.dof/r.depth - 1)/1.0, 0, 1);
+  const difM = clamp((0.60 - c.diff)/0.60, 0, 1);
+  const mtfM = clamp(c.mtfRatio/1.5, 0, 1);
+  const cost = 0.6*c.cam.tier + 0.4*c.lens.tier;
+  const costM = clamp((4 - cost)/3, 0, 1);
+  const waste = clamp(((c.fw*c.fh)/(r.fovRW*r.fovRH) - 1)/2, 0, 1);
+  const base = 100*(0.32*resM + 0.16*dofM + 0.20*difM + 0.12*mtfM + 0.20*costM);
+  return base - 8*waste + (c.cam.shutter === "全局" ? 4 : 0);
+}
+
+function compute(r){
+  const d = reqDerived(r);
+  const screening = CAMERAS.map(cam => {
+    const pa = d.fovRW/cam.w;
+    const ppd = r.defect/pa;
+    return {cam, pa, ppd, ok: ppd >= r.pxd};
+  });
+  const combos = [];
+  for (const s of screening){
+    if (!s.ok) continue;
+    for (const lens of LENSES){
+      const c = evaluate(s.cam, lens, r);
+      if (c){ c.score = score(c, r); combos.push(c); }
+    }
+  }
+  combos.sort((a,b) => b.score - a.score);
+  if (combos.length){
+    const top = combos[0].score > 1e-6 ? combos[0].score : 1;
+    combos.forEach(c => c.rel = Math.max(0, c.score/top*100));
+  }
+  const seen = new Set(), best = [];
+  for (const c of combos){ if (!seen.has(c.cam.id)){ seen.add(c.cam.id); best.push(c); } }
+
+  // 初筛通过、但没有可用镜头组合 —— 给出原因
+  const nearMiss = [];
+  for (const s of screening){
+    if (!s.ok) continue;
+    if (combos.some(c => c.cam.id === s.cam.id)) continue;
+    let bestTry = null, sawDof = false;
+    for (const lens of LENSES){
+      const c = tryCombo(s.cam, lens, r);
+      if (c.ok){ if (!bestTry || c.ppd > bestTry.ppd) bestTry = c; }
+      else if (c.fail === "景深不足" && c.fw >= r.fovRW && c.fh >= r.fovRH) sawDof = true;
+    }
+    let reason;
+    if (bestTry){
+      reason = `最佳 ${bestTry.lens.id}：视野 ${n1(bestTry.fw)}×${n1(bestTry.fh)} mm、`
+        + `${(bestTry.pa*1000).toFixed(1)} µm/px（${bestTry.ppd.toFixed(2)} px，需 ${r.pxd} px）`;
+    } else if (sawDof){
+      reason = `能覆盖视野的镜头在最小光圈下景深仍不足 ${r.depth} mm`;
+    } else {
+      reason = `没有镜头能在 ${r.wd} mm 处覆盖 ${n1(r.fovRW)}×${n1(r.fovRH)} mm 的视野（需要更短焦距或更远工作距离）`;
+    }
+    nearMiss.push({cam:s.cam, reason});
+  }
+
+  const tele = [];
+  for (const s of screening){
+    if (!s.ok) continue;
+    for (const t of TELE){
+      if (t.circle + 1e-9 < diag(s.cam)) continue;
+      if (Math.abs(r.wd - t.wd) > 25) continue;
+      const fw = sensorW(s.cam)/t.mag, fh = sensorH(s.cam)/t.mag;
+      if (fw < r.fovRW || fh < r.fovRH) continue;
+      const pa = s.cam.p/1000/t.mag, ppd = r.defect/pa;
+      const why = [];
+      if (ppd < r.pxd) why.push(`像素 ${ppd.toFixed(1)}px`);
+      if (t.dof < r.depth) why.push(`景深 ${t.dof}mm`);
+      tele.push({cam:s.cam, t, fw, fh, pa, ppd, ok: why.length===0, why: why.join("、")});
+    }
+  }
+  tele.sort((a,b) => (b.ok - a.ok) || (b.ppd - a.ppd));
+  return {d, screening, combos, best, tele, nearMiss};
+}
+
+const n1 = x => x.toFixed(1);
+const n2 = x => x.toFixed(2);
+const esc = s => String(s).replace(/[&<>"]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+
+function card(k, v, u){ return `<div class="card"><div class="k">${k}</div><div class="v">${v}<span class="u"> ${u}</span></div></div>`; }
+
+function render(){
+  const r = readReq();
+  const {d, screening, combos, best, tele, nearMiss} = compute(r);
+  const maxPpd = Math.max(...screening.map(s => s.ppd), 0.1);
+  const mark = Math.min(99, r.pxd/(maxPpd*1.05)*100);
+
+  let h = `<div class="cards">
+    ${card("像素精度上限", (d.paMax*1000).toFixed(1), "µm/px")}
+    ${card("最少像素", `${d.nw}×${d.nh}`, "")}
+    ${card("最少分辨率", d.mp.toFixed(1), "MP")}
+    ${card("测量不确定度", "±" + (d.paMax*1000).toFixed(1), "µm")}
+  </div>`;
+
+  // 相机初筛
+  h += `<div class="sec"><h3>一、相机初筛（${n1(d.fovRW)}×${n1(d.fovRH)} mm 视野）</h3>
+  <table><thead><tr><th>相机</th><th>分辨率</th><th>MP</th><th>像元 µm</th><th>精度 µm/px</th>
+  <th>px / ${r.defect}mm<br><span style="font-weight:400;color:#9aa1ad">黑线=门槛 ${r.pxd}px</span></th><th>判定</th></tr></thead><tbody>`;
+  for (const s of screening){
+    const w = Math.min(100, s.ppd/(maxPpd*1.05)*100);
+    h += `<tr><td><b>${s.cam.id}</b><br><span style="color:#9aa1ad;font-size:11px">${esc(s.cam.note)}</span></td>
+      <td>${s.cam.w}×${s.cam.h}</td><td>${(s.cam.w*s.cam.h/1e6).toFixed(1)}</td><td>${s.cam.p.toFixed(2)}</td>
+      <td>${(s.pa*1000).toFixed(1)}</td>
+      <td>${s.ppd.toFixed(2)}<div class="bar"><i style="width:${w.toFixed(1)}%"></i><b style="left:${mark.toFixed(1)}%"></b></div></td>
+      <td class="${s.ok?'ok':'bad'}">${s.ok?'通过':'不足'}</td></tr>`;
+  }
+  h += `</tbody></table></div>`;
+
+  // 推荐
+  h += `<div class="sec"><h3>二、相机 + 镜头组合</h3>`;
+  if (!combos.length){
+    h += `<p class="empty">没有满足全部约束的组合：建议缩小视野、拉长工作距离、放宽景深，或改用线扫 / 多相机拼接。</p>`;
+  } else {
+    h += `<table><thead><tr><th>#</th><th>相机</th><th>镜头</th><th>光圈</th><th>视野 mm</th>
+      <th>精度 µm/px</th><th>px/缺陷</th><th>景深 mm</th><th>衍射占比</th><th>评分</th></tr></thead><tbody>`;
+    combos.slice(0,6).forEach((c,i) => {
+      h += `<tr><td>${i+1}</td><td>${c.cam.id}</td><td>${esc(c.lens.id)}</td><td>f/${c.N}</td>
+        <td>${n1(c.fw)}×${n1(c.fh)}</td><td>${(c.pa*1000).toFixed(2)}</td><td>${n2(c.ppd)}</td>
+        <td>${n1(c.dof)}</td><td>${Math.round(c.diff*100)}%</td><td>${Math.round(c.rel)}</td></tr>`;
+    });
+    h += `</tbody></table>`;
+
+    const b = best[0];
+    h += `<div class="rec"><div class="t"><span>推荐</span>${b.cam.id} + ${esc(b.lens.id)} @ f/${b.N}</div>
+      <div class="grid">
+        <div>实际视野<b>${n1(b.fw)} × ${n1(b.fh)} mm</b></div>
+        <div>像素精度<b>${(b.pa*1000).toFixed(2)} µm/px</b></div>
+        <div>${r.defect} mm 缺陷<b>${n2(b.ppd)} px</b></div>
+        <div>景深 @ f/${b.N}<b>${n1(b.dof)} mm</b></div>
+        <div>衍射占比<b>${Math.round(b.diff*100)}%</b></div>
+        <div>镜头解析力<b>${b.lens.mtf} / 建议 ${Math.round(b.lensNeed)} lp/mm</b></div>
+      </div>
+      <ul class="notes">${(b.warnings.length?b.warnings:["无显著风险项"]).map(w=>`<li>${esc(w)}</li>`).join("")}</ul>
+    </div>`;
+
+    if (best[1]){
+      const a = best[1];
+      h += `<p style="font-size:12.5px;color:#4b5563;margin:10px 0 0">备选：<b>${a.cam.id} + ${esc(a.lens.id)} @ f/${a.N}</b>
+        —— ${n2(a.ppd)} px/缺陷、景深 ${n1(a.dof)} mm、视野 ${n1(a.fw)}×${n1(a.fh)} mm。</p>`;
+    }
+  }
+  if (nearMiss.length){
+    h += `<div class="miss"><b>初筛通过、但没有镜头组合：</b><ul>` +
+      nearMiss.map(m => `<li><b>${m.cam.id}</b>：${esc(m.reason)}</li>`).join("") + `</ul></div>`;
+  }
+  h += `</div>`;
+
+  // 远心
+  h += `<div class="sec"><h3>三、测量级：远心镜头</h3>`;
+  if (tele.length){
+    h += `<table><thead><tr><th>相机</th><th>远心镜头</th><th>倍率</th><th>视野 mm</th><th>精度 µm/px</th><th>px/缺陷</th><th>景深 mm</th><th>判定</th></tr></thead><tbody>`;
+    tele.slice(0,4).forEach(t => {
+      h += `<tr><td>${t.cam.id}</td><td>${t.t.id}</td><td>${t.t.mag}×</td><td>${n1(t.fw)}×${n1(t.fh)}</td>
+        <td>${(t.pa*1000).toFixed(2)}</td><td>${n2(t.ppd)}</td><td>${t.t.dof}</td>
+        <td class="${t.ok?'ok':'bad'}">${t.ok?'可用':'不满足：'+esc(t.why)}</td></tr>`;
+    });
+    h += `</tbody></table>`;
+  } else {
+    h += `<p class="empty">当前 WD（±25 mm）内没有能覆盖该视野的标准远心档位，需按型号定制或调整安装距离。</p>`;
+  }
+  h += `<p class="hint" style="margin-top:8px">若 ${r.defect} mm 是尺寸公差而非检出阈值，建议远心镜头 + 标定板，并把“每缺陷像素数”提到 4–5。</p></div>`;
+
+  // 视野对照
+  h += `<div class="sec"><h3>四、视野变化的影响</h3><table><thead><tr><th>视野 mm</th><th>所需像素</th><th>MP</th><th>结论</th></tr></thead><tbody>`;
+  const maxMp = Math.max(...CAMERAS.map(c => c.w*c.h/1e6));
+  [ [50,40],[100,80],[200,160],[300,240] ].forEach(([w,hh]) => {
+    const nw = Math.ceil(w*(1+r.margin)/d.paMax), nh = Math.ceil(hh*(1+r.margin)/d.paMax);
+    const mp = nw*nh/1e6;
+    h += `<tr><td>${w}×${hh}</td><td>${nw}×${nh}</td><td>${mp.toFixed(1)}</td>
+      <td class="${mp<=maxMp?'ok':'bad'}">${mp<=maxMp?'单相机':'需多相机 / 线扫'}</td></tr>`;
+  });
+  h += `</tbody></table>
+    <details><summary>计算公式与假设</summary>
+      <p style="line-height:1.9;margin-top:6px">
+      <code>m = f/(WD−f)</code>　<code>FOV = 靶面/m</code>　<code>px = 像元/m</code><br>
+      <code>DOF ≈ 2Nc(1+m)/m²</code>，c = 2×像元　<code>d_airy = 2.44λN(1+m)</code><br>
+      薄透镜近似；WD 自主平面起算；λ = 0.55 µm；镜头 MTF 按 30% 对比度标称。<br>
+      器材为同级通用规格，采购前请用厂商 datasheet 复核 MOD、畸变与像圈。</p>
+    </details></div>`;
+
+  document.getElementById("out").innerHTML = h;
+}
+
+document.getElementById("go").addEventListener("click", render);
+document.querySelectorAll(".presets button").forEach(b => {
+  b.addEventListener("click", () => {
+    const [w,hh,wd,dp] = b.dataset.p.split(",").map(Number);
+    document.getElementById("fovW").value = w;
+    document.getElementById("fovH").value = hh;
+    document.getElementById("wd").value = wd;
+    document.getElementById("depth").value = dp;
+    render();
+  });
+});
+["fovW","fovH","wd","depth","defect","pxd","margin"].forEach(id => {
+  document.getElementById(id).addEventListener("input", () => {
+    clearTimeout(window.__t);
+    window.__t = setTimeout(render, 250);
+  });
+});
+
+// 支持 URL 预填：?fovW=120&fovH=75&wd=200&depth=6.1&defect=0.05&pxd=1&margin=50
+const q = new URLSearchParams(location.search);
+["fovW","fovH","wd","depth","defect","pxd","margin"].forEach(k => {
+  if (q.has(k)) document.getElementById(k).value = q.get(k);
+});
+render();
+</script>
+</body>
+</html>
